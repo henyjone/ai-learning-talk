@@ -6,457 +6,536 @@
 <title>AI 时代的学习方式 · 公开课</title>
 <style>
   :root{
-    --bg:#0a0e1a; --bg2:#10162a;
-    --ink:#f4f6fb; --muted:#9aa6c2; --dim:#6b768f;
-    --gold:#e8b04b; --gold-soft:#f3cd84;
-    --green:#4fd1a1; --red:#ff6b6b; --line:rgba(255,255,255,.10);
-    --maxw:1100px;
+    --bg:#0a0f1e; --ink:#eef2fb; --muted:#aab4cf; --dim:#727e9a;
+    --gold:#e9b84d; --gold-soft:#f4d489; --teal:#3fd6a8; --red:#ff7a7a;
+    --line:rgba(255,255,255,.10); --surf:rgba(255,255,255,.045);
+    --maxw:1120px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%}
   body{
-    background:radial-gradient(1200px 800px at 70% -10%, #1a2444 0%, var(--bg) 55%) , var(--bg);
+    background:radial-gradient(1100px 760px at 78% -12%, #1b274a 0%, var(--bg) 58%), var(--bg);
     color:var(--ink);
     font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",-apple-system,system-ui,sans-serif;
-    overflow:hidden; line-height:1.5; letter-spacing:.01em;
-    -webkit-font-smoothing:antialiased;
+    overflow:hidden;line-height:1.5;-webkit-font-smoothing:antialiased;
   }
-  /* progress */
-  #bar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-soft));width:0;z-index:50;transition:width .35s ease}
-  /* slide */
+  #bar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-soft));width:0;z-index:60;transition:width .35s ease}
+  #brand{position:fixed;top:15px;left:clamp(20px,4vw,44px);font-size:12px;letter-spacing:.14em;color:var(--dim);z-index:50}
+  #brand b{color:var(--gold-soft);font-weight:700}
   .deck{position:fixed;inset:0}
-  .slide{
-    position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;
-    padding:clamp(32px,6vw,96px);
-    opacity:0;visibility:hidden;transform:translateY(22px);
-    transition:opacity .5s ease, transform .5s ease;
-    pointer-events:none;
-  }
+  .slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;
+    padding:clamp(34px,5.5vw,92px) clamp(34px,6vw,96px);
+    opacity:0;visibility:hidden;transform:translateY(20px);
+    transition:opacity .5s ease,transform .5s ease;pointer-events:none;}
   .slide.active{opacity:1;visibility:visible;transform:none;pointer-events:auto}
   .wrap{max-width:var(--maxw);margin:0 auto;width:100%}
-  .kicker{color:var(--gold);font-weight:700;letter-spacing:.18em;font-size:clamp(12px,1.4vw,15px);text-transform:uppercase;margin-bottom:22px}
-  h1{font-size:clamp(34px,6.4vw,76px);font-weight:800;line-height:1.12;letter-spacing:-.01em}
-  h2{font-size:clamp(28px,4.6vw,52px);font-weight:800;line-height:1.18}
-  .lead{font-size:clamp(18px,2.4vw,28px);color:var(--muted);margin-top:26px;max-width:880px}
-  .big{font-size:clamp(30px,5.2vw,62px);font-weight:800;line-height:1.2}
-  .accent{color:var(--gold)}
-  .green{color:var(--green)} .red{color:var(--red)}
-  .sub{color:var(--muted)}
-  .small{font-size:clamp(14px,1.5vw,17px);color:var(--dim)}
-  .mt{margin-top:30px}.mt2{margin-top:48px}
-  /* fragments */
+  .center{text-align:center}
+  .kicker{display:inline-flex;align-items:center;gap:10px;color:var(--gold);font-weight:700;letter-spacing:.16em;font-size:clamp(11px,1.3vw,14px);text-transform:uppercase;margin-bottom:22px}
+  .kicker::before{content:"";width:26px;height:2px;background:var(--gold)}
+  h1{font-size:clamp(34px,6vw,72px);font-weight:800;line-height:1.12;letter-spacing:-.015em}
+  h2{font-size:clamp(27px,4.3vw,50px);font-weight:800;line-height:1.18;letter-spacing:-.01em}
+  .lead{font-size:clamp(17px,2.2vw,26px);color:var(--muted);margin-top:22px;max-width:900px}
+  .big{font-size:clamp(26px,4.4vw,54px);font-weight:800;line-height:1.22}
+  .axis{font-size:clamp(30px,5.3vw,64px);font-weight:800;line-height:1.22}
+  .accent{color:var(--gold)} .teal{color:var(--teal)} .red{color:var(--red)} .sub{color:var(--muted)}
+  .small{font-size:clamp(13px,1.4vw,16px);color:var(--dim)}
+  .mt{margin-top:24px}.mt2{margin-top:42px}
   .frag{opacity:0;transform:translateY(10px);transition:opacity .45s ease,transform .45s ease}
   .frag.show{opacity:1;transform:none}
-  /* lists */
-  ul.points{list-style:none;margin-top:30px;display:flex;flex-direction:column;gap:20px}
-  ul.points li{font-size:clamp(18px,2.5vw,30px);padding-left:38px;position:relative}
-  ul.points li::before{content:"";position:absolute;left:0;top:.55em;width:14px;height:14px;border-radius:50%;background:var(--gold)}
-  /* two column contrast */
-  .two{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:40px}
-  .card{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:18px;padding:clamp(20px,2.6vw,34px)}
-  .card h3{font-size:clamp(20px,2.6vw,30px);font-weight:800;margin-bottom:16px}
-  .card p{color:var(--muted);font-size:clamp(15px,1.7vw,20px);margin-top:8px}
-  .card.bad{border-color:rgba(255,107,107,.35)}
-  .card.good{border-color:rgba(79,209,161,.4)}
-  .tag{display:inline-block;font-size:13px;font-weight:700;letter-spacing:.08em;padding:5px 12px;border-radius:999px;margin-bottom:14px}
-  .tag.bad{background:rgba(255,107,107,.15);color:var(--red)}
-  .tag.good{background:rgba(79,209,161,.15);color:var(--green)}
+  .ico{width:1em;height:1em;vertical-align:-.12em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  /* points */
+  ul.points{list-style:none;margin-top:26px;display:flex;flex-direction:column;gap:18px}
+  ul.points li{font-size:clamp(17px,2.3vw,28px);padding-left:40px;position:relative}
+  ul.points li .ico{position:absolute;left:0;top:.1em;width:26px;height:26px;color:var(--gold)}
+  /* cards / grid */
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:34px}
+  .card{background:var(--surf);border:1px solid var(--line);border-radius:18px;padding:clamp(20px,2.4vw,30px)}
+  .card h3{font-size:clamp(19px,2.4vw,28px);font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+  .card p{color:var(--muted);font-size:clamp(14px,1.6vw,19px);margin-top:6px}
+  .card.bad{border-color:rgba(255,122,122,.32)} .card.good{border-color:rgba(63,214,168,.36)}
+  .card .ico{width:26px;height:26px}
+  .tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.08em;padding:5px 12px;border-radius:999px;margin-bottom:12px}
+  .tag.bad{background:rgba(255,122,122,.14);color:var(--red)} .tag.good{background:rgba(63,214,168,.14);color:var(--teal)}
+  /* table */
+  table.ct{width:100%;border-collapse:collapse;margin-top:28px;font-size:clamp(14px,1.75vw,21px)}
+  table.ct th,table.ct td{padding:13px 18px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  table.ct thead th{font-size:.78em;letter-spacing:.06em;font-weight:800;border-bottom:2px solid var(--line)}
+  table.ct thead th.bad{color:var(--red);border-bottom-color:rgba(255,122,122,.5)}
+  table.ct thead th.good{color:var(--teal);border-bottom-color:rgba(63,214,168,.5)}
+  table.ct thead th.lab{color:var(--gold)}
+  table.ct td.rh{color:var(--muted);font-weight:700;white-space:nowrap}
+  table.ct td .red{color:var(--red)} table.ct td .teal{color:var(--teal)}
   /* flow */
-  .flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:14px;margin-top:44px}
-  .step{flex:1;min-width:150px;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:16px;padding:22px 18px;position:relative}
-  .step .n{font-size:13px;font-weight:800;color:var(--gold);letter-spacing:.1em}
-  .step .t{font-size:clamp(17px,1.9vw,22px);font-weight:700;margin-top:10px}
-  .step .d{font-size:14px;color:var(--dim);margin-top:8px}
-  .arrow{align-self:center;color:var(--gold);font-size:24px;flex:0 0 auto}
-  /* library diagram */
-  .lib{display:grid;grid-template-columns:1fr;gap:20px;margin-top:40px}
-  .libbox{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:18px;padding:26px 30px}
-  .libbox .h{font-size:clamp(20px,2.4vw,28px);font-weight:800}
-  .libbox .h .accent{font-weight:800}
-  .clones{display:flex;gap:14px;flex-wrap:wrap;margin-top:18px}
-  .chip{background:rgba(232,176,75,.12);border:1px solid rgba(232,176,75,.35);color:var(--gold-soft);border-radius:12px;padding:12px 16px;font-weight:700;font-size:15px}
+  .flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:12px;margin-top:38px}
+  .step{flex:1;min-width:140px;background:var(--surf);border:1px solid var(--line);border-radius:15px;padding:20px 16px}
+  .step .n{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800;color:var(--gold);letter-spacing:.08em}
+  .step .n .ico{width:18px;height:18px}
+  .step .t{font-size:clamp(16px,1.8vw,21px);font-weight:700;margin-top:9px}
+  .step .d{font-size:13px;color:var(--dim);margin-top:7px}
+  .arrow{align-self:center;color:var(--gold);font-size:22px;flex:0 0 auto}
+  /* phone chat */
+  .phone{max-width:400px;margin:6px auto 0;background:#0d1426;border:1px solid var(--line);border-radius:30px;padding:16px 14px 18px;box-shadow:0 30px 64px rgba(0,0,0,.45)}
+  .phone .notch{width:84px;height:6px;border-radius:99px;background:rgba(255,255,255,.16);margin:0 auto 12px}
+  .bubble{max-width:84%;padding:10px 13px;border-radius:15px;margin:7px 0;font-size:clamp(13px,1.5vw,16px);line-height:1.45}
+  .bubble .who{font-size:10px;opacity:.55;margin-bottom:3px;letter-spacing:.04em}
+  .bubble.me{margin-left:auto;background:linear-gradient(135deg,var(--gold),#c79b3c);color:#1c1304;border-bottom-right-radius:5px}
+  .bubble.ai{background:rgba(255,255,255,.07);border:1px solid var(--line);border-bottom-left-radius:5px}
+  .bubble.ai.dim{color:var(--muted)}
+  .savechip{display:inline-flex;gap:6px;align-items:center;margin:10px auto 0;font-size:13px;color:var(--teal);border:1px solid rgba(63,214,168,.4);border-radius:99px;padding:5px 12px}
+  .demohead{display:flex;gap:10px;align-items:center;justify-content:center;margin-bottom:6px}
+  /* notecard */
+  .notecard{max-width:580px;margin:24px auto 0;background:#fbf8ef;color:#23262e;border-radius:14px;padding:24px 28px;box-shadow:0 26px 54px rgba(0,0,0,.5);position:relative;text-align:left}
+  .notecard::before{content:"";position:absolute;left:0;top:20px;bottom:20px;width:4px;border-radius:0 4px 4px 0;background:var(--gold)}
+  .notecard h4{font-size:clamp(17px,2vw,22px);margin-bottom:14px;color:#191c22;display:flex;align-items:center;gap:9px}
+  .notecard h4 .ico{color:#b8902f;width:22px;height:22px}
+  .nrow{margin:11px 0}
+  .nlab{font-size:12px;color:#937c34;font-weight:800;letter-spacing:.03em}
+  .nval{font-size:clamp(14px,1.6vw,17px);color:#2b2e36;margin-top:3px;line-height:1.5}
+  /* week dashboard */
+  .weekgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:30px}
+  .tile{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:18px 16px}
+  .tile .ico{width:24px;height:24px;color:var(--gold)}
+  .tile .bn{font-size:clamp(26px,3.4vw,38px);font-weight:800;color:var(--ink);margin-top:8px;line-height:1}
+  .tile .tl{font-size:14px;color:var(--muted);margin-top:4px}
+  .tile .pv{font-size:11.5px;color:var(--dim);margin-top:10px;border-top:1px solid var(--line);padding-top:9px}
   /* four questions */
-  .q4{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:38px}
-  .q{background:rgba(255,255,255,.04);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:14px;padding:22px 24px}
-  .q .qn{color:var(--gold);font-weight:800;font-size:14px;letter-spacing:.1em}
-  .q .qt{font-size:clamp(18px,2.2vw,26px);font-weight:700;margin-top:8px}
-  .q .qd{color:var(--muted);font-size:14px;margin-top:8px}
-  /* quote slide */
-  .axis{font-size:clamp(30px,5.6vw,68px);font-weight:800;line-height:1.22}
-  .axis .accent{white-space:nowrap}
-  /* CTA */
-  .pill{display:inline-block;border:1px solid var(--gold);color:var(--gold);border-radius:999px;padding:10px 22px;font-weight:700;margin-top:8px}
-  .qr{width:130px;height:130px;border-radius:16px;border:2px dashed var(--dim);display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:13px;text-align:center;margin-top:24px}
-  /* chrome */
-  #meta{position:fixed;bottom:20px;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:0 clamp(24px,4vw,56px);z-index:40;pointer-events:none}
-  #sec{color:var(--dim);font-size:13px;letter-spacing:.06em}
-  #count{color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
-  #hint{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);color:var(--dim);font-size:12px;z-index:40;opacity:.7;transition:opacity .4s}
+  .q4{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:32px}
+  .q{background:var(--surf);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:13px;padding:20px 22px}
+  .q .qn{color:var(--gold);font-weight:800;font-size:13px;letter-spacing:.08em}
+  .q .qt{font-size:clamp(17px,2vw,24px);font-weight:700;margin-top:7px}
+  .q .qd{color:var(--muted);font-size:13px;margin-top:7px}
+  /* library diagram */
+  .libbox{background:var(--surf);border:1px solid var(--line);border-radius:16px;padding:20px 26px;text-align:center}
+  .libbox.base{border-color:rgba(232,176,75,.4)}
+  .libbox .h{font-size:clamp(18px,2.2vw,26px);font-weight:800}
+  .libcon{width:2px;height:30px;background:var(--gold);margin:0 auto;opacity:.6}
+  .clones{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:0}
+  .chip{background:rgba(232,176,75,.1);border:1px solid rgba(232,176,75,.34);color:var(--gold-soft);border-radius:12px;padding:16px 12px;font-weight:700;font-size:clamp(13px,1.5vw,16px);text-align:center}
+  .chip .ico{display:block;width:24px;height:24px;margin:0 auto 8px;color:var(--gold)}
+  /* divider */
+  .divider{background:linear-gradient(140deg,#0f1a36 0%,#0a1020 60%)}
+  .partnum{font-size:clamp(96px,20vw,230px);font-weight:800;line-height:.9;color:transparent;-webkit-text-stroke:2px rgba(232,176,75,.55);letter-spacing:-.03em}
+  .pill{display:inline-block;border:1px solid var(--gold);color:var(--gold);border-radius:999px;padding:9px 20px;font-weight:700}
+  .qr{width:128px;height:128px;border-radius:14px;border:2px dashed var(--dim);display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:12px;text-align:center}
+  .gateway{background:var(--surf);border:1px solid var(--line);border-radius:16px;padding:22px 26px;margin-top:26px;text-align:left}
+  .gateway .gh{font-weight:800;font-size:clamp(17px,2vw,23px);display:flex;gap:10px;align-items:center}
+  #meta{position:fixed;bottom:18px;left:0;right:0;display:flex;justify-content:space-between;padding:0 clamp(22px,4vw,52px);z-index:40;pointer-events:none}
+  #sec{color:var(--dim);font-size:12.5px;letter-spacing:.05em}
+  #count{color:var(--muted);font-size:12.5px;font-variant-numeric:tabular-nums}
+  #hint{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);color:var(--dim);font-size:11.5px;z-index:40;opacity:.7;transition:opacity .4s}
   #hint.hide{opacity:0}
-  .navbtn{position:fixed;top:50%;transform:translateY(-50%);z-index:45;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--ink);width:46px;height:46px;border-radius:50%;cursor:pointer;font-size:20px;opacity:.4;transition:opacity .2s}
-  .navbtn:hover{opacity:1}
-  #prev{left:18px}#next{right:18px}
-  @media(max-width:720px){
-    .slide{justify-content:flex-start;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:58px 20px 76px}
-    .two,.q4{grid-template-columns:1fr;gap:14px;margin-top:24px}
-    .flow{flex-direction:column;margin-top:24px;gap:10px}
-    .arrow{transform:rotate(90deg)}
-    .navbtn{display:none}
-    .kicker{margin-bottom:12px}
-    ul.points{gap:14px;margin-top:20px}
-    ul.points li{padding-left:30px}
-    ul.points li::before{width:11px;height:11px}
-    .lead{margin-top:18px}.mt{margin-top:18px}.mt2{margin-top:26px}
-    .step{min-width:0}
-    .qr{width:120px;height:120px}
-  }
-  @media(max-width:720px) and (orientation:portrait){
-    h1{font-size:34px}.axis{font-size:32px}.big{font-size:27px}h2{font-size:26px}
+  .navbtn{position:fixed;top:50%;transform:translateY(-50%);z-index:45;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--ink);width:44px;height:44px;border-radius:50%;cursor:pointer;font-size:20px;opacity:.35;transition:opacity .2s}
+  .navbtn:hover{opacity:1}#prev{left:16px}#next{right:16px}
+  @media(max-width:760px){
+    .slide{justify-content:flex-start;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:56px 18px 74px}
+    .two,.q4,.clones{grid-template-columns:1fr}.weekgrid{grid-template-columns:1fr 1fr}
+    .flow{flex-direction:column}.arrow{transform:rotate(90deg)}.navbtn{display:none}
+    table.ct th,table.ct td{padding:10px 12px}
+    h1{font-size:33px}.axis{font-size:31px}.big{font-size:25px}h2{font-size:25px}
   }
 </style>
 </head>
 <body>
+<!-- icon sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-brain" viewBox="0 0 24 24"><path d="M9 3a3 3 0 0 0-3 3 3 3 0 0 0-2 5 3 3 0 0 0 1 5 3 3 0 0 0 4 3V4a1 1 0 0 0-0-1zM15 3a3 3 0 0 1 3 3 3 3 0 0 1 2 5 3 3 0 0 1-1 5 3 3 0 0 1-4 3V4a1 1 0 0 1 0-1z"/></symbol>
+<symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/><circle cx="12" cy="12" r="2.4"/></symbol>
+<symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-4 3v-3H4z"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
+<symbol id="i-cards" viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="14" rx="2"/><path d="M8 3h11a2 2 0 0 1 2 2v12"/></symbol>
+<symbol id="i-coach" viewBox="0 0 24 24"><circle cx="12" cy="7" r="3.2"/><path d="M5 21c0-4 3-6 7-6s7 2 7 6"/></symbol>
+<symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 1 4 10c-.8.8-1 1.5-1 2H9c0-.5-.2-1.2-1-2A6 6 0 0 1 12 3z"/></symbol>
+<symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.4"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5 9-11"/></symbol>
+<symbol id="i-up" viewBox="0 0 24 24"><path d="M4 18 11 9l4 4 5-8"/><path d="M20 9V5h-4" /></symbol>
+<symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 4 3 19h18zM12 10v4M12 17h.01"/></symbol>
+<symbol id="i-note" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 12h7M9 16h7"/></symbol>
+<symbol id="i-pen" viewBox="0 0 24 24"><path d="M14 4 20 10 9 21H3v-6z"/></symbol>
+</defs></svg>
+
 <div id="bar"></div>
-<button class="navbtn" id="prev" aria-label="上一页">‹</button>
-<button class="navbtn" id="next" aria-label="下一页">›</button>
+<div id="brand"><b>破局</b> · 升维九鼎 ｜ 家庭线公开课</div>
+<button class="navbtn" id="prev">‹</button>
+<button class="navbtn" id="next">›</button>
+
 <div class="deck" id="deck">
 
   <!-- 1 cover -->
   <section class="slide" data-sec="开场">
     <div class="wrap">
-      <div class="kicker">破局 · 升维九鼎 — 家庭线公开课</div>
-      <h1>AI 时代，<br>孩子的<span class="accent">「自学力」</span>才是真资产</h1>
+      <div class="kicker">AI 时代的学习方式</div>
+      <h1>孩子的<span class="accent">「自学力」</span>，<br>才是 AI 时代的真资产</h1>
       <p class="lead">当答案唾手可得，到底该让孩子学会什么？</p>
-      <p class="big mt2 sub" style="font-size:clamp(20px,2.6vw,30px)">你家孩子卡住时，是<span class="accent">先自己想</span>，还是<span class="accent">先问 AI</span>？</p>
+      <p class="big mt2" style="font-size:clamp(19px,2.5vw,28px);color:var(--ink)"><svg class="ico" style="color:var(--gold)"><use href="#i-spark"/></svg> 你家孩子卡住时，是<span class="accent">先自己想</span>，还是<span class="accent">先问 AI</span>？</p>
     </div>
   </section>
 
-  <!-- 2 主轴句 -->
-  <section class="slide" data-sec="开场">
-    <div class="wrap" style="text-align:center">
+  <!-- 2 主轴 -->
+  <section class="slide center" data-sec="开场">
+    <div class="wrap">
       <p class="axis">AI 不会让孩子变笨，<br><span class="accent">「被 AI 伺候着长大」</span>才会。</p>
     </div>
   </section>
 
-  <!-- 3 痛点画面 -->
-  <section class="slide" data-sec="开场 · 痛点">
+  <!-- 3 divider P1 -->
+  <section class="slide divider center" data-sec="痛点">
+    <div class="wrap"><div class="partnum">01</div><h2 class="accent">一个你可能很熟悉的画面</h2></div>
+  </section>
+
+  <!-- 4 痛点 -->
+  <section class="slide" data-sec="痛点">
     <div class="wrap">
-      <div class="kicker">一个你可能很熟悉的画面</div>
       <h2 class="frag">作业写得又快又对，本子干干净净——<br>你以为他在学。</h2>
       <p class="big frag mt2">换个说法、过两天再问，<span class="red">他就坐那儿，空着。</span></p>
-      <p class="lead frag">他可能根本没在学，他在<span class="accent">「外包大脑」</span>。本子越漂亮，越危险。</p>
+      <p class="lead frag">他可能根本没在学，他在<span class="accent">「外包大脑」</span>。<b>本子越漂亮，越危险。</b></p>
     </div>
   </section>
 
-  <!-- 4 这不怪孩子 -->
-  <section class="slide" data-sec="开场 · 痛点">
+  <!-- 5 不怪孩子 -->
+  <section class="slide" data-sec="痛点">
     <div class="wrap">
       <h2>这不怪孩子。</h2>
-      <p class="lead">卡住三秒，答案就到手——这是这个时代给<span class="accent">每一个孩子</span>的默认设置。换我小时候有这工具，我也抄。</p>
+      <p class="lead">卡住三秒、答案到手——这是这个时代给<span class="accent">每一个孩子</span>的默认设置。</p>
       <p class="big frag mt2">但同一个 AI，有的孩子越用越笨，有的越用越聪明。<br>差别不在 AI，在<span class="accent">「谁先开口」</span>。</p>
     </div>
   </section>
 
-  <!-- 5 差距搬家 -->
-  <section class="slide" data-sec="立意 · 学习方式变了什么">
+  <!-- 6 divider P2 -->
+  <section class="slide divider center" data-sec="立意">
+    <div class="wrap"><div class="partnum">02</div><h2 class="accent">学习方式，到底变了什么</h2></div>
+  </section>
+
+  <!-- 7 门槛搬家 TABLE -->
+  <section class="slide" data-sec="立意 · 差距搬家">
     <div class="wrap">
       <div class="kicker">差距没有消失，它「搬家」了</div>
-      <div class="two">
-        <div class="card frag"><div class="tag bad">旧门槛 · 被 AI 夷平</div><h3>知不知道答案</h3><p>谁记得多、调得快，谁赢。盯作业、报班、刷题，本质都是「多装答案」。</p></div>
-        <div class="card good frag"><div class="tag good">新门槛 · 盯不着也替不了</div><h3>没人喂答案时，<br>还想不想得动</h3><p>你能盯他写没写作业，盯不住他脑子里有没有在转。</p></div>
-      </div>
+      <table class="ct">
+        <thead><tr><th class="lab">维度</th><th class="bad">旧门槛 · 已被 AI 夷平</th><th class="good">新门槛 · 你盯不着也替不了</th></tr></thead>
+        <tbody>
+          <tr><td class="rh">比的是</td><td><span class="red">知不知道答案</span></td><td><span class="teal">没人喂答案时，还想不想得动</span></td></tr>
+          <tr><td class="rh">怎么赢</td><td>记得多、调得快</td><td>会拆解、会自己想清楚</td></tr>
+          <tr><td class="rh">家长能帮上吗</td><td>能：盯作业、报班、刷题</td><td>难：你盯不住他脑子里有没有在转</td></tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
-  <!-- 6 分水岭 -->
-  <section class="slide" data-sec="立意 · 学习方式变了什么">
+  <!-- 8 分水岭 -->
+  <section class="slide center" data-sec="立意 · 分水岭">
     <div class="wrap">
-      <div class="kicker">真正的分水岭</div>
-      <h2>不是「会不会用 AI」——人人都会用。</h2>
-      <p class="big mt2 frag">是你让 AI <span class="red">替你思考</span>，<br>还是你借 AI <span class="green">把自己想得更深</span>。</p>
-      <p class="lead frag">同一个工具，走两个相反的方向。</p>
+      <div class="kicker" style="justify-content:center">真正的分水岭</div>
+      <p class="big">不是「会不会用 AI」——人人都会用。</p>
+      <p class="axis frag mt2">你让 AI <span class="red">替你思考</span>，<br>还是借 AI <span class="teal">把自己想得更深</span>？</p>
     </div>
   </section>
 
-  <!-- 7 外包的是什么 -->
-  <section class="slide" data-sec="立意 · 学习方式变了什么">
+  <!-- 9 外包摩擦 -->
+  <section class="slide" data-sec="立意 · 外包了什么">
     <div class="wrap">
-      <div class="kicker">孩子「外包」出去的，到底是什么？</div>
+      <div class="kicker"><svg class="ico"><use href="#i-spark"/></svg> 孩子「外包」出去的，到底是什么？</div>
       <h2 class="frag">不是答案。是那一次<br><span class="accent">「卡住、硬想、突然通了」</span>的挣扎。</h2>
-      <p class="lead frag">思考这块肌肉，只在这个「摩擦」里长。而 AI 最危险的地方，恰恰是它<span class="accent">太顺滑</span>，把摩擦消灭得干干净净。</p>
-      <p class="big frag mt2">没有摩擦，就没有生长。</p>
+      <p class="lead frag">思考这块肌肉，只在这个「摩擦」里长。AI 最危险的地方，是它<span class="accent">太顺滑</span>，把摩擦消灭得干干净净。</p>
+      <p class="big frag mt">没有摩擦，就没有生长。</p>
     </div>
   </section>
 
-  <!-- 8 伺候笨 -->
-  <section class="slide" data-sec="立意 · 学习方式变了什么">
-    <div class="wrap" style="text-align:center">
-      <p class="axis">孩子不是被 AI <span class="sub">教</span>笨的，<br>是被 AI <span class="accent">「伺候」</span>笨的。</p>
-    </div>
+  <!-- 10 伺候笨 -->
+  <section class="slide center" data-sec="立意">
+    <div class="wrap"><p class="axis">孩子不是被 AI <span class="sub">教</span>笨的，<br>是被 AI <span class="accent">「伺候」</span>笨的。</p></div>
   </section>
 
-  <!-- 9 两类孩子 -->
+  <!-- 11 两类孩子 TABLE + chart -->
   <section class="slide" data-sec="立意 · 两类孩子">
     <div class="wrap">
       <div class="kicker">两类孩子，正在分叉</div>
-      <div class="two">
-        <div class="card bad frag"><div class="tag bad">外包大脑</div><h3>一卡住就问 AI</h3><p>抄下来，本子漂亮，自己啥也没留下。<br><b class="red">爽一秒，忘得快。</b></p></div>
-        <div class="card good frag"><div class="tag good">把 AI 当陪练</div><h3>先逼自己想</h3><p>想不通再让 AI 提示、反问，自己重新走通。<br><b class="green">每过一关，脑子升一级。</b></p></div>
+      <div class="two" style="grid-template-columns:1.25fr .9fr;align-items:center">
+        <table class="ct" style="margin-top:0">
+          <thead><tr><th class="lab"></th><th class="bad">外包大脑</th><th class="good">把 AI 当陪练</th></tr></thead>
+          <tbody>
+            <tr><td class="rh">卡住时</td><td>直接抄答案</td><td>先逼自己想</td></tr>
+            <tr><td class="rh">AI 的角色</td><td>替他答</td><td>提示、反问</td></tr>
+            <tr><td class="rh">留下了</td><td><span class="red">啥也没有</span></td><td><span class="teal">自己想通的痕迹</span></td></tr>
+            <tr><td class="rh">十年后</td><td><span class="red">离开工具就不会</span></td><td><span class="teal">越用越强</span></td></tr>
+          </tbody>
+        </table>
+        <svg viewBox="0 0 300 200" class="frag" style="width:100%">
+          <line x1="40" y1="20" x2="40" y2="170" stroke="rgba(255,255,255,.18)"/>
+          <line x1="40" y1="170" x2="285" y2="170" stroke="rgba(255,255,255,.18)"/>
+          <path d="M45 120 C140 116 200 70 280 35" fill="none" stroke="var(--teal)" stroke-width="3"/>
+          <path d="M45 120 C140 124 200 150 280 165" fill="none" stroke="var(--red)" stroke-width="3"/>
+          <circle cx="280" cy="35" r="4" fill="var(--teal)"/><circle cx="280" cy="165" r="4" fill="var(--red)"/>
+          <text x="45" y="190" fill="var(--dim)" font-size="12">现在</text>
+          <text x="240" y="190" fill="var(--dim)" font-size="12">十年后</text>
+          <text x="150" y="14" fill="var(--dim)" font-size="11" text-anchor="middle">能力（示意）</text>
+        </svg>
       </div>
       <p class="lead frag">十年后差距不在分数——在<span class="accent">离开了工具，还会不会思考</span>。</p>
     </div>
   </section>
 
-  <!-- 10 拐杖vs轮椅 -->
+  <!-- 12 拐杖vs轮椅 SVG -->
   <section class="slide" data-sec="立意 · 一句逆耳的话">
     <div class="wrap">
-      <div class="kicker">一句可能让你不舒服的话</div>
-      <h2 class="frag">很多时候，是家长的<span class="accent">「尽责」</span>，<br>在制造孩子的<span class="red">「无能」</span>。</h2>
-      <p class="big frag mt2">你越勤奋，他越被动。<br>你不是他的拐杖，<span class="red">你正在变成他的轮椅。</span></p>
-      <p class="small frag mt">拐杖：他自己走、你扶一把。轮椅：他不用走了，你推着。</p>
+      <div class="kicker"><svg class="ico"><use href="#i-warn"/></svg> 一句可能让你不舒服的话</div>
+      <h2 class="frag">很多时候，是家长的<span class="accent">「尽责」</span>，在制造孩子的<span class="red">「无能」</span>。</h2>
+      <div class="two frag" style="margin-top:30px">
+        <div class="card good center"><svg viewBox="0 0 120 120" style="height:110px"><line x1="60" y1="18" x2="60" y2="98" stroke="var(--teal)" stroke-width="4" stroke-linecap="round"/><line x1="44" y1="30" x2="76" y2="30" stroke="var(--teal)" stroke-width="4" stroke-linecap="round"/><path d="M60 98 l-14 8" stroke="var(--teal)" stroke-width="4" stroke-linecap="round"/></svg><h3 class="teal" style="justify-content:center">拐杖</h3><p>他自己走，你扶一把。</p></div>
+        <div class="card bad center"><svg viewBox="0 0 120 120" style="height:110px"><circle cx="54" cy="84" r="22" fill="none" stroke="var(--red)" stroke-width="4"/><circle cx="92" cy="94" r="9" fill="none" stroke="var(--red)" stroke-width="4"/><path d="M54 62 V44 h22" fill="none" stroke="var(--red)" stroke-width="4" stroke-linecap="round"/><circle cx="60" cy="34" r="7" fill="none" stroke="var(--red)" stroke-width="4"/><line x1="40" y1="84" x2="70" y2="84" stroke="var(--red)" stroke-width="4" stroke-linecap="round"/></svg><h3 class="red" style="justify-content:center">轮椅</h3><p>他不用走了，你推着。</p></div>
+      </div>
     </div>
   </section>
 
-  <!-- 11 三句真懂 -->
-  <section class="slide" data-sec="立意 · 关于「真懂」">
+  <!-- 13 三句真懂 -->
+  <section class="slide" data-sec="立意 · 关于真懂">
     <div class="wrap">
       <div class="kicker">三句关于「真懂」的大实话</div>
       <ul class="points">
-        <li class="frag"><b>真懂的标志不是做对，是<span class="accent">讲得清楚</span>。</b>讲不清的地方，就是没懂的地方。</li>
-        <li class="frag"><b>主动回忆 &gt; 反复刷。</b>合上书、用大白话讲一遍——「白纸测试」。<span class="sub">「熟悉感」是 AI 时代最大的学习骗局。</span></li>
-        <li class="frag"><b>家长的旧打法，在 AI 时代可能<span class="red">有害</span>。</b>新打法八个字：<span class="accent">建系统、当教练</span>。</li>
+        <li class="frag"><svg class="ico"><use href="#i-chat"/></svg><b>真懂的标志不是做对，是<span class="accent">讲得清楚</span>。</b>讲不清的地方，就是没懂的地方。</li>
+        <li class="frag"><svg class="ico"><use href="#i-bulb"/></svg><b>主动回忆 &gt; 反复刷。</b>合上书、用大白话讲一遍——「白纸测试」。<span class="sub">「熟悉感」是 AI 时代最大的学习骗局。</span></li>
+        <li class="frag"><svg class="ico"><use href="#i-warn"/></svg><b>家长的旧打法，在 AI 时代可能<span class="red">有害</span>。</b>新打法八个字：<span class="accent">建系统、当教练</span>。</li>
       </ul>
     </div>
   </section>
 
-  <!-- 12 过渡 -->
-  <section class="slide" data-sec="现场演示">
-    <div class="wrap" style="text-align:center">
-      <h2>道理讲到这儿，你可能将信将疑。</h2>
-      <p class="big accent mt2">那我现在不讲道理——演给你看。</p>
-    </div>
+  <!-- 14 divider P3 -->
+  <section class="slide divider center" data-sec="现场演示">
+    <div class="wrap"><div class="partnum">03</div><h2 class="accent">现场演示：答案机 vs 陪练</h2><p class="lead center" style="margin-left:auto;margin-right:auto">同一个 AI，同一道题。差别只在「谁先开口」。</p></div>
   </section>
 
-  <!-- 13 演示标题 -->
-  <section class="slide" data-sec="现场演示 · 高潮">
+  <!-- 15 演示题 -->
+  <section class="slide" data-sec="现场演示 · 题目">
     <div class="wrap">
-      <div class="kicker">现场演示</div>
-      <h1>答案机用法 <span class="sub">vs</span> 陪练用法</h1>
-      <p class="lead">同一个 AI，同一道题。<span class="accent">差别只在「谁先开口」。</span></p>
-      <p class="small mt2">演示题（非学科）：周六四件事——陪奶奶看病 / 小组作业 / 和同学打球 / 帮家里买菜，时间不够，怎么安排最划算？</p>
+      <div class="kicker"><svg class="ico"><use href="#i-target"/></svg> 今天用这道题（生活决策题）</div>
+      <div class="card" style="font-size:clamp(18px,2.4vw,28px);line-height:1.6">
+        周六有 <b class="accent">4 件事</b>：陪奶奶看病 · 写小组作业 · 和同学约了打球 · 帮家里买菜。<br>时间不够全做完，<b>怎么安排最划算？</b>
+      </div>
+      <p class="small mt">同样一道题，下面看两种用法，结果天差地别。</p>
     </div>
   </section>
 
-  <!-- 14 答案机 -->
+  <!-- 16 答案机 chat -->
   <section class="slide" data-sec="现场演示 · 答案机">
     <div class="wrap">
-      <div class="tag bad">① 答案机用法（错误示范）</div>
-      <h2 class="frag">「直接给我完整方案」→ AI 三秒丝滑给出。</h2>
-      <p class="lead frag">孩子照着说一遍，显得很会规划，家长很欣慰。</p>
-      <p class="big frag mt2">条件一变（看病改下午、球局提前）——<span class="red">他排不出来了。</span></p>
-      <p class="big frag"><b class="red">爽一秒，忘得快，能力一点没长。</b><span class="sub"> 表面进步，其实退步。</span></p>
+      <div class="demohead"><span class="tag bad" style="margin:0">① 答案机用法</span></div>
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="bubble me"><div class="who">孩子</div>这件事怎么安排？直接给我完整方案。</div>
+        <div class="bubble ai"><div class="who">AI</div>当然：① 先陪奶奶看病 ② 回家写作业 ③ 顺路买菜 ④ 最后打球。理由是……（一长串，三秒生成）</div>
+        <div class="bubble me"><div class="who">孩子</div>（照抄）</div>
+      </div>
+      <p class="big frag center mt">条件一变 → <span class="red">他排不出来了。</span></p>
+      <p class="small frag center">爽一秒，忘得快，能力一点没长。表面进步，其实退步。</p>
     </div>
   </section>
 
-  <!-- 15 陪练 -->
+  <!-- 17 陪练 chat -->
   <section class="slide" data-sec="现场演示 · 陪练">
     <div class="wrap">
-      <div class="tag good">② 陪练用法（正确示范）</div>
-      <div class="flow" style="margin-top:30px">
-        <div class="step frag"><div class="n">先</div><div class="t">给 AI 立规则</div><div class="d">「你是陪练不是答案机，不许直接给答案」</div></div>
-        <div class="arrow frag">→</div>
-        <div class="step frag"><div class="n">再</div><div class="t">孩子先说思路</div><div class="d">说一半、卡住</div></div>
-        <div class="arrow frag">→</div>
-        <div class="step frag"><div class="n">然后</div><div class="t">AI 只反问</div><div class="d">把球踢回给孩子</div></div>
-        <div class="arrow frag">→</div>
-        <div class="step frag"><div class="n">最后</div><div class="t">自己走通</div><div class="d">答案从孩子嘴里出来</div></div>
+      <div class="demohead"><span class="tag good" style="margin:0">② 陪练用法</span></div>
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="bubble me"><div class="who">孩子（先立规则）</div>你是陪练不是答案机，<b>不许直接给方案</b>，只能反问我、给我小提示。</div>
+        <div class="bubble me"><div class="who">孩子（先说思路）</div>我想先看哪件最急、不能改时间……然后我卡住了。</div>
+        <div class="bubble ai"><div class="who">AI（只反问）</div>这 4 件里，哪些是<b>别人也在等你、错过就没法补</b>的？</div>
+        <div class="bubble me"><div class="who">孩子（自己想通）</div>哦！看病和打球约了别人，先排；作业和买菜我自己能挪！</div>
+        <div class="savechip"><svg class="ico" style="width:15px;height:15px"><use href="#i-check"/></svg> 自动存成「思维卡」</div>
       </div>
-      <p class="lead frag">整个过程，孩子的脑子<span class="green">全程开机</span>。</p>
+      <p class="small frag center mt">全程，孩子的脑子<span class="teal">开机</span>。</p>
     </div>
   </section>
 
-  <!-- 16 谁先开口 -->
-  <section class="slide" data-sec="现场演示 · 收口">
-    <div class="wrap" style="text-align:center">
-      <p class="axis">差别不在工具，<br>在<span class="accent">「谁先开口」</span>。</p>
-      <p class="lead frag" style="margin-left:auto;margin-right:auto">让 AI 先开口，是 AI 在思考；让孩子先开口，是<span class="green">孩子</span>在思考。</p>
-    </div>
-  </section>
-
-  <!-- 17 升格原理 -->
-  <section class="slide" data-sec="现场演示 · 原理">
+  <!-- 18 对比 TABLE -->
+  <section class="slide" data-sec="现场演示 · 对比">
     <div class="wrap">
-      <div class="kicker">这不是一个技巧，是一条原则</div>
-      <ul class="points">
-        <li class="frag">凡是让孩子<span class="red">「不动脑也能过」</span>的工具，都在偷偷废掉他。</li>
-        <li class="frag">凡是逼他<span class="green">「动了脑才能过」</span>的工具，都在喂养他。</li>
-      </ul>
-      <p class="lead frag mt2">AI 只是这个时代最锋利的那把双刃刀。<span class="accent">递给孩子之前，得先教他怎么握。</span></p>
+      <div class="kicker">同一个 AI，逐行看差别</div>
+      <table class="ct">
+        <thead><tr><th class="lab"></th><th class="bad">① 答案机用法</th><th class="good">② 陪练用法</th></tr></thead>
+        <tbody>
+          <tr><td class="rh">谁先开口</td><td><span class="red">AI 先</span></td><td><span class="teal">孩子先</span></td></tr>
+          <tr><td class="rh">孩子的大脑</td><td>关机</td><td>全程运转</td></tr>
+          <tr><td class="rh">换个条件</td><td><span class="red">归零、不会</span></td><td><span class="teal">照样会权衡</span></td></tr>
+          <tr><td class="rh">留下了什么</td><td>一份抄来的方案</td><td>一张自己的思维卡</td></tr>
+          <tr><td class="rh">长期</td><td><span class="red">被工具喂废</span></td><td><span class="teal">被工具练强</span></td></tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
-  <!-- 18 留痕 -->
+  <!-- 19 谁先开口 -->
+  <section class="slide center" data-sec="现场演示 · 收口">
+    <div class="wrap"><p class="axis">差别不在工具，<br>在<span class="accent">「谁先开口」</span>。</p><p class="lead frag" style="margin:18px auto 0">让孩子先开口，是<span class="teal">孩子</span>在思考。</p></div>
+  </section>
+
+  <!-- 20 留痕 notecard 示例 -->
   <section class="slide" data-sec="现场演示 · 留痕">
-    <div class="wrap" style="text-align:center">
-      <div class="kicker">最值钱的最后一步 · 留痕</div>
-      <p class="big">一张卡：我卡在哪、关键那一问、我怎么想通的。</p>
-      <p class="axis accent mt2">一张卡，胜过抄十份方案。</p>
-      <p class="lead frag" style="margin-left:auto;margin-right:auto">因为它是孩子自己思维的痕迹，真正长在脑子里的东西。</p>
-    </div>
-  </section>
-
-  <!-- 19 系统标题 -->
-  <section class="slide" data-sec="方法与系统">
     <div class="wrap">
-      <div class="kicker">让「陪练用法」每天发生</div>
-      <h2>刚才那一下很惊艳。但你回家自己试，<br><span class="red">大概率坚持不了三天。</span></h2>
-      <p class="lead frag">因为靠自觉，等于把「对抗人性」这件最难的事，甩给一个十几岁的孩子。</p>
+      <div class="kicker"><svg class="ico"><use href="#i-note"/></svg> 最值钱的最后一步：留痕（真实示例）</div>
+      <div class="notecard">
+        <h4><svg class="ico"><use href="#i-note"/></svg> 思维卡 · 周末时间怎么安排</h4>
+        <div class="nrow"><div class="nlab">我卡在哪</div><div class="nval">只盯着"哪件最急"，不知道接下来怎么排。</div></div>
+        <div class="nrow"><div class="nlab">关键的那一问</div><div class="nval">哪些是"别人也在等我、错过没法补"的？</div></div>
+        <div class="nrow"><div class="nlab">我怎么想通的</div><div class="nval">约了别人的先排（看病、打球），自己能挪的后排（作业、买菜）。</div></div>
+      </div>
+      <p class="small frag center mt">一张卡，胜过抄十份方案——因为它是孩子<span class="accent">自己思维的痕迹</span>。</p>
     </div>
   </section>
 
-  <!-- 20 搭环境 -->
-  <section class="slide" data-sec="方法与系统">
-    <div class="wrap" style="text-align:center">
-      <h2>自律不是天生的德行，<br>是<span class="accent">设计出来</span>的产物。</h2>
-      <p class="big frag mt2">家长该花力气的地方：<br>不是盯人，是<span class="accent">搭环境</span>。</p>
+  <!-- 21 divider P4 -->
+  <section class="slide divider center" data-sec="方法与系统">
+    <div class="wrap"><div class="partnum">04</div><h2 class="accent">让「陪练用法」每天发生</h2></div>
+  </section>
+
+  <!-- 22 搭环境 -->
+  <section class="slide center" data-sec="方法与系统">
+    <div class="wrap">
+      <p class="big">回家自己试，大概率<span class="red">坚持不了三天</span>。</p>
+      <h2 class="frag mt2">自律不是天生的德行，是<span class="accent">设计出来</span>的产物。</h2>
+      <p class="lead frag" style="margin:18px auto 0">家长该花力气的：不是盯人，是<span class="accent">搭环境</span>。</p>
     </div>
   </section>
 
-  <!-- 21 铁律 -->
-  <section class="slide" data-sec="方法与系统 · 铁律">
-    <div class="wrap" style="text-align:center">
-      <div class="kicker">整套体系的地基</div>
-      <p class="axis"><span class="accent">「AI 是陪练，不是答案机。」</span></p>
-      <p class="lead frag" style="margin-left:auto;margin-right:auto">贴书桌上、写进 AI 的设定里、变成全家的共识。</p>
-    </div>
-  </section>
-
-  <!-- 22 五步闭环 -->
+  <!-- 23 铁律 + 五步闭环 -->
   <section class="slide" data-sec="方法与系统 · 闭环">
     <div class="wrap">
-      <div class="kicker">孩子每天走的五步闭环</div>
+      <div class="kicker"><svg class="ico"><use href="#i-lock"/></svg> 地基一句话：「AI 是陪练，不是答案机」</div>
+      <h2>孩子每天走的五步闭环</h2>
       <div class="flow">
         <div class="step frag"><div class="n">01</div><div class="t">先自己想</div><div class="d">卡住也先扛一会儿</div></div>
         <div class="arrow frag">→</div>
         <div class="step frag"><div class="n">02</div><div class="t">说出思路</div><div class="d">讲不清就是没懂</div></div>
         <div class="arrow frag">→</div>
-        <div class="step frag"><div class="n">03</div><div class="t">AI 只提示追问</div><div class="d">不给答案</div></div>
+        <div class="step frag"><div class="n">03</div><div class="t">AI 只提示</div><div class="d">不给答案</div></div>
         <div class="arrow frag">→</div>
-        <div class="step frag"><div class="n">04</div><div class="t">自己重做走通</div><div class="d">答案从孩子出</div></div>
+        <div class="step frag"><div class="n">04</div><div class="t">自己走通</div><div class="d">答案从孩子出</div></div>
         <div class="arrow frag">→</div>
-        <div class="step frag"><div class="n">05</div><div class="t">留痕</div><div class="d">知识卡 + 周复盘</div></div>
+        <div class="step frag"><div class="n">05</div><div class="t">留痕</div><div class="d">卡片 + 周复盘</div></div>
       </div>
-      <p class="lead frag">练的是「自己学会」的能力——这是任何班都报不来的。</p>
     </div>
   </section>
 
-  <!-- 23 公共库+学生库 -->
+  <!-- 24 公共库+学生库 diagram -->
   <section class="slide" data-sec="方法与系统 · 系统">
     <div class="wrap">
-      <div class="kicker">一套系统：公共基础库 + 学生库</div>
-      <div class="lib">
-        <div class="libbox frag"><div class="h"><span class="accent">公共基础库</span> · 一次搭好，所有孩子共用</div><p class="sub" style="margin-top:8px">标准化学习材料 · 给 AI 立规矩的「AI 规则」· 知识卡/复盘/提问模板</p></div>
-        <div class="libbox frag"><div class="h"><span class="accent">学生库</span> · 克隆一份，按你家孩子定制</div>
-          <div class="clones"><span class="chip">学生库 · 张三</span><span class="chip">学生库 · 李四</span><span class="chip">学生库 · 王五</span></div>
-          <p class="sub" style="margin-top:14px">AI 在这个库里，就成了「最懂你孩子」的那个陪练。</p>
-        </div>
+      <div class="kicker"><svg class="ico"><use href="#i-cards"/></svg> 一套系统：公共基础库 + 学生库</div>
+      <div class="libbox base frag"><div class="h"><span class="accent">公共基础库</span></div><p class="sub" style="margin-top:6px">教材 · AI 规则 · 知识卡/复盘模板（一次搭好，所有孩子共用）</p></div>
+      <div class="libcon frag"></div>
+      <div class="clones">
+        <div class="chip frag"><svg class="ico"><use href="#i-coach"/></svg>学生库 · 张三</div>
+        <div class="chip frag"><svg class="ico"><use href="#i-coach"/></svg>学生库 · 李四</div>
+        <div class="chip frag"><svg class="ico"><use href="#i-coach"/></svg>学生库 · 王五</div>
       </div>
+      <p class="small frag center mt">克隆一份、按你家孩子定制——AI 成了「最懂你孩子」的那个陪练。</p>
     </div>
   </section>
 
-  <!-- 24 样例库 -->
+  <!-- 25 样例库 dashboard 示例 -->
   <section class="slide" data-sec="方法与系统 · 成果形态">
     <div class="wrap">
-      <div class="kicker">一个「填满第一周」的样例学生库</div>
-      <h2 class="frag">沉淀的不是一堆做过就扔的纸，<br>而是<span class="accent">一摞他自己思维的痕迹</span>。</h2>
-      <p class="lead frag">每张卡都是他自己想通的一个点。一周、一月、一年累积——这是孩子<span class="accent">最硬、也最带得走</span>的资产。</p>
-    </div>
-  </section>
-
-  <!-- 25 家长角色标题 -->
-  <section class="slide" data-sec="家长角色">
-    <div class="wrap">
-      <div class="kicker">最后讲你 — 家长</div>
-      <h1>从<span class="red">「监工」</span><br>换挡成<span class="green">「教练」</span></h1>
-      <p class="lead">这套系统能不能跑起来，一半在系统，一半在你扮演什么角色。</p>
-    </div>
-  </section>
-
-  <!-- 26 监工vs教练 -->
-  <section class="slide" data-sec="家长角色">
-    <div class="wrap">
-      <div class="two">
-        <div class="card bad frag"><div class="tag bad">监工</div><h3>盯对错</h3><p>眼睛盯在答案上：错了！重做！<br>你越盯，他越对抗。</p></div>
-        <div class="card good frag"><div class="tag good">教练</div><h3>看表达</h3><p>眼睛盯在思路上：你是怎么想的？<br>说给我听听。</p></div>
+      <div class="kicker">一个「填满第一周」的学生库（真实形态）</div>
+      <div class="weekgrid">
+        <div class="tile frag"><svg class="ico"><use href="#i-pen"/></svg><div class="bn">4</div><div class="tl">每日学习记录</div><div class="pv">周一～周五，看得见过程</div></div>
+        <div class="tile frag"><svg class="ico"><use href="#i-note"/></svg><div class="bn">3</div><div class="tl">错题 / 思维卡</div><div class="pv">含"周末安排"那张</div></div>
+        <div class="tile frag"><svg class="ico"><use href="#i-cards"/></svg><div class="bn">2</div><div class="tl">知识卡</div><div class="pv">自己想通的点</div></div>
+        <div class="tile frag"><svg class="ico"><use href="#i-target"/></svg><div class="bn">1</div><div class="tl">家长周复盘</div><div class="pv">下周只抓一件事</div></div>
       </div>
-      <p class="lead frag">根子：「学习的责任」一直背在你身上，没交给他。</p>
+      <p class="lead frag">沉淀的不是做过就扔的纸，是<span class="accent">一摞他自己思维的痕迹</span>——孩子最硬、也最带得走的资产。</p>
     </div>
   </section>
 
-  <!-- 27 不需要懂 -->
-  <section class="slide" data-sec="家长角色">
-    <div class="wrap" style="text-align:center">
-      <h2>你<span class="accent">不需要懂</span>那件事本身。</h2>
-      <p class="big frag mt2">你的工作只有一件：<br>让孩子<span class="accent">「开口讲思路」</span>。</p>
-      <p class="lead frag" style="margin-left:auto;margin-right:auto">你不必懂，你只需要会问。</p>
+  <!-- 26 divider P5 -->
+  <section class="slide divider center" data-sec="家长角色">
+    <div class="wrap"><div class="partnum">05</div><h2 class="accent">家长：从「监工」换挡成「教练」</h2></div>
+  </section>
+
+  <!-- 27 监工vs教练 TABLE -->
+  <section class="slide" data-sec="家长角色 · 对比">
+    <div class="wrap">
+      <table class="ct">
+        <thead><tr><th class="lab"></th><th class="bad">监工（旧）</th><th class="good">教练（新）</th></tr></thead>
+        <tbody>
+          <tr><td class="rh">眼睛盯着</td><td><span class="red">答案对不对</span></td><td><span class="teal">思路讲不讲得清</span></td></tr>
+          <tr><td class="rh">口头禅</td><td>错了！重做！</td><td>你是怎么想的？</td></tr>
+          <tr><td class="rh">需要懂这道题吗</td><td>要</td><td><span class="teal">不需要</span></td></tr>
+          <tr><td class="rh">结果</td><td><span class="red">你越盯他越对抗</span></td><td><span class="teal">他愿意开口、更主动</span></td></tr>
+        </tbody>
+      </table>
+      <p class="lead frag">你不必懂，你只需要会问。</p>
     </div>
   </section>
 
   <!-- 28 四问法 -->
   <section class="slide" data-sec="家长角色 · 四问法">
     <div class="wrap">
-      <div class="kicker">马上能用的「家长四问法」· 今晚就贴冰箱</div>
+      <div class="kicker"><svg class="ico"><use href="#i-coach"/></svg> 马上能用的「家长四问法」· 今晚就贴冰箱</div>
       <div class="q4">
         <div class="q frag"><div class="qn">问一</div><div class="qt">你是怎么想的？</div><div class="qd">让他开口，先听不评判</div></div>
         <div class="q frag"><div class="qn">问二</div><div class="qt">为什么这么想？</div><div class="qd">逼出「真懂」还是「套路」</div></div>
-        <div class="q frag"><div class="qn">问三</div><div class="qt">有没有别的办法 / 哪里还不确定？</div><div class="qd">往深走，暴露模糊地带</div></div>
+        <div class="q frag"><div class="qn">问三</div><div class="qt">有没有别的办法？</div><div class="qd">往深走，暴露模糊地带</div></div>
         <div class="q frag"><div class="qn">问四</div><div class="qt">这个，你能教会我吗？</div><div class="qd">能教会你，才是真懂</div></div>
       </div>
-      <p class="small frag mt">没有一句在问「对不对」——全是在让孩子<span class="accent">表达和思考</span>。这就是教练。</p>
+      <p class="small frag mt">没有一句在问「对不对」——全是在让孩子<span class="accent">表达和思考</span>。</p>
     </div>
   </section>
 
-  <!-- 29 收口立意 -->
-  <section class="slide" data-sec="收口">
-    <div class="wrap" style="text-align:center">
-      <div class="kicker">回到今晚的起点</div>
-      <p class="axis">答案不值钱的时代，<br>会自己想的孩子，才是<span class="accent">稀缺</span>的。</p>
+  <!-- 29 见效节奏 TABLE -->
+  <section class="slide" data-sec="家长角色 · 见效节奏">
+    <div class="wrap">
+      <div class="kicker"><svg class="ico"><use href="#i-up"/></svg> 见效节奏（看方式，不看一次分数）</div>
+      <table class="ct">
+        <thead><tr><th class="lab">时间</th><th class="good">你会看见什么</th></tr></thead>
+        <tbody>
+          <tr><td class="rh">第 1 周</td><td>跑通第一个完整闭环：自己想 → 讲思路 → AI 追问 → 走通 → 留下第一张卡</td></tr>
+          <tr><td class="rh">第 1 个月</td><td>搜答案的反射变弱，开始「自己先分析」；家长拿到提问法</td></tr>
+          <tr><td class="rh">一个学段</td><td>会讲清思路、会把 AI 当陪练、有稳定留痕——<span class="teal">自学力成型</span></td></tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
-  <!-- 30 轻量出口 -->
+  <!-- 30 divider P6 -->
+  <section class="slide divider center" data-sec="收口">
+    <div class="wrap"><div class="partnum">06</div><h2 class="accent">今晚，你可以带走什么</h2></div>
+  </section>
+
+  <!-- 31 收口立意 -->
+  <section class="slide center" data-sec="收口">
+    <div class="wrap"><p class="axis">答案不值钱的时代，<br>会自己想的孩子，才<span class="accent">稀缺</span>。</p></div>
+  </section>
+
+  <!-- 32 轻量出口 -->
   <section class="slide" data-sec="收口 · 给所有人">
     <div class="wrap">
       <div class="kicker">给在座每一个家庭的真东西（不要钱）</div>
       <ul class="points">
-        <li class="frag">把桌上这张「<span class="accent">四问法</span>」带回家，今晚就用一次。</li>
-        <li class="frag"><span class="accent">扫码关注 / 进家长社群</span>——持续放更多可直接抄的模板：AI 规则、知识卡、复盘模板，全免费。</li>
+        <li class="frag"><svg class="ico"><use href="#i-coach"/></svg>把桌上「<span class="accent">四问法</span>」带回家，今晚就用一次。</li>
+        <li class="frag"><svg class="ico"><use href="#i-cards"/></svg><span class="accent">扫码关注 / 进群</span>——持续放可直接抄的模板：AI 规则、知识卡、复盘模板，全免费。</li>
       </ul>
-      <p class="lead frag mt2">到这里，你已经可以自己回家开干了。这套东西是<span class="accent">完整的</span>。</p>
+      <p class="lead frag mt2">这套东西是<span class="accent">完整的</span>，你已经可以自己回家开干了。</p>
     </div>
   </section>
 
-  <!-- 31 私享计划 -->
+  <!-- 33 私享计划 -->
   <section class="slide" data-sec="收口 · 给少数">
     <div class="wrap">
       <div class="kicker">只跟一种家庭有关</div>
       <h2>「破局自学 · 创始人私享计划」</h2>
-      <p class="lead frag">我<span class="accent">亲自</span>带、一对一，为你的孩子搭起专属系统，把你从监工训练成教练，陪你们走通最关键的第一个月。</p>
-      <p class="big frag mt2">这不是报名，是<span class="accent">筛选</span>。</p>
-      <p class="small frag">名额制 · 不适合所有人 · 会后约一次一对一诊断，合适再谈，不合适也给你一份清楚的判断，<span class="green">不收费</span>。<br><span class="red">不是补习班，不提分、不补课。</span></p>
+      <p class="lead frag">我<span class="accent">亲自</span>带、一对一，为你的孩子搭专属系统，把你从监工训练成教练，陪你们走通最关键的第一个月。</p>
+      <div class="gateway frag">
+        <div class="gh"><svg class="ico" style="color:var(--gold)"><use href="#i-target"/></svg> 这不是报名，是<span class="accent">筛选</span></div>
+        <p class="sub mt" style="margin-top:10px">名额制 · 不适合所有人 · 会后约一次一对一诊断，合适再谈，不合适也给你一份清楚判断，<span class="teal">不收费</span>。<br><span class="red">不是补习班，不提分、不补课。</span></p>
+      </div>
     </div>
   </section>
 
-  <!-- 32 结束 -->
-  <section class="slide" data-sec="谢谢">
-    <div class="wrap" style="text-align:center">
-      <p class="axis">AI 不会让孩子变笨，<br><span class="accent">「被 AI 伺候着长大」</span>才会。</p>
-      <p class="lead frag" style="margin-left:auto;margin-right:auto">别让工具替孩子思考，要让工具<span class="accent">逼</span>孩子思考。</p>
-      <div class="frag" style="display:flex;gap:30px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:30px">
+  <!-- 34 结束 -->
+  <section class="slide center" data-sec="谢谢">
+    <div class="wrap">
+      <p class="axis">别让工具<span class="red">替</span>孩子思考，<br>要让工具<span class="teal">逼</span>孩子思考。</p>
+      <div class="frag" style="display:flex;gap:28px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:30px">
         <span class="pill">扫码领「四问法」单页</span>
         <div class="qr">关注 / 诊断<br>二维码位</div>
       </div>
-      <p class="small frag mt">谢谢大家。</p>
+      <p class="small frag mt">谢谢大家。 ｜ <b style="color:var(--gold-soft)">破局 · 升维九鼎</b></p>
     </div>
   </section>
 
@@ -469,56 +548,38 @@
 (function(){
   var slides=[].slice.call(document.querySelectorAll('.slide'));
   var bar=document.getElementById('bar'),sec=document.getElementById('sec'),count=document.getElementById('count'),hint=document.getElementById('hint');
-  var i=0, fi=0, hintTimer;
+  var i=0,fi=0,ht;
   function frags(s){return [].slice.call(s.querySelectorAll('.frag'));}
   function render(){
     slides.forEach(function(s,n){s.classList.toggle('active',n===i);});
-    var fr=frags(slides[i]);
-    fr.forEach(function(f,n){f.classList.toggle('show',n<fi);});
-    bar.style.width=((i)/(slides.length-1)*100)+'%';
+    frags(slides[i]).forEach(function(f,n){f.classList.toggle('show',n<fi);});
+    bar.style.width=(i/(slides.length-1)*100)+'%';
     sec.textContent=slides[i].dataset.sec||'';
     count.textContent=(i+1)+' / '+slides.length;
   }
-  function show(n){ // ensure all frags of current shown
-    fi=frags(slides[i]).length; render();
-  }
-  function next(){
-    var fr=frags(slides[i]);
-    if(fi<fr.length){fi++;render();return;}
-    if(i<slides.length-1){i++;fi=0;render();}
-  }
-  function prev(){
-    if(fi>0 && fi< frags(slides[i]).length){ // step back a fragment only if mid-reveal
-      // simpler: go to previous slide fully shown
-    }
-    if(i>0){i--;show();}
-    else{fi=0;render();}
-  }
-  function goNextSlide(){ if(i<slides.length-1){i++;fi=0;render();} }
-  function goPrevSlide(){ if(i>0){i--; fi=frags(slides[i]).length; render();} }
+  function showAll(){fi=frags(slides[i]).length;render();}
+  function next(){var f=frags(slides[i]);if(fi<f.length){fi++;render();return;}if(i<slides.length-1){i++;fi=0;render();}}
+  function nextSlide(){if(i<slides.length-1){i++;fi=0;render();}}
+  function prevSlide(){if(i>0){i--;fi=frags(slides[i]).length;render();}}
   document.addEventListener('keydown',function(e){
     if(['ArrowRight','PageDown',' ','Spacebar'].indexOf(e.key)>=0){e.preventDefault();next();}
-    else if(['ArrowDown'].indexOf(e.key)>=0){e.preventDefault();goNextSlide();}
-    else if(['ArrowLeft','PageUp'].indexOf(e.key)>=0){e.preventDefault();goPrevSlide();}
-    else if(e.key==='ArrowUp'){e.preventDefault();goPrevSlide();}
+    else if(e.key==='ArrowDown'){e.preventDefault();nextSlide();}
+    else if(['ArrowLeft','PageUp','ArrowUp'].indexOf(e.key)>=0){e.preventDefault();prevSlide();}
     else if(e.key==='Home'){i=0;fi=0;render();}
-    else if(e.key==='End'){i=slides.length-1;show();}
-    else if(e.key==='f'||e.key==='F'){if(!document.fullscreenElement){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}else{document.exitFullscreen&&document.exitFullscreen();}}
-    flashHint();
+    else if(e.key==='End'){i=slides.length-1;showAll();}
+    else if(e.key==='f'||e.key==='F'){if(!document.fullscreenElement){(document.documentElement.requestFullscreen||function(){})();}else{(document.exitFullscreen||function(){})();}}
+    flash();
   });
   document.getElementById('next').addEventListener('click',function(e){e.stopPropagation();next();});
-  document.getElementById('prev').addEventListener('click',function(e){e.stopPropagation();goPrevSlide();});
-  document.getElementById('deck').addEventListener('click',function(e){ if(e.target.closest('.navbtn'))return; next(); });
-  // touch swipe
+  document.getElementById('prev').addEventListener('click',function(e){e.stopPropagation();prevSlide();});
+  document.getElementById('deck').addEventListener('click',function(e){if(e.target.closest('.navbtn'))return;next();});
   var x0=null;
   document.addEventListener('touchstart',function(e){x0=e.touches[0].clientX;},{passive:true});
-  document.addEventListener('touchend',function(e){ if(x0===null)return; var dx=e.changedTouches[0].clientX-x0; if(Math.abs(dx)>50){dx<0?next():goPrevSlide();} x0=null;});
-  function flashHint(){hint.classList.add('hide');clearTimeout(hintTimer);hintTimer=setTimeout(function(){hint.classList.remove('hide');},2500);}
-  // location hash for deep-link
+  document.addEventListener('touchend',function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>50){dx<0?next():prevSlide();}x0=null;});
+  function flash(){hint.classList.add('hide');clearTimeout(ht);ht=setTimeout(function(){hint.classList.remove('hide');},2500);}
   window.addEventListener('hashchange',function(){var n=parseInt(location.hash.slice(1));if(!isNaN(n)&&n>=1&&n<=slides.length){i=n-1;fi=0;render();}});
-  var h=parseInt(location.hash.slice(1)); if(!isNaN(h)&&h>=1){i=Math.min(h-1,slides.length-1);}
-  render();
-  setTimeout(function(){hint.classList.add('hide');},6000);
+  var h=parseInt(location.hash.slice(1));if(!isNaN(h)&&h>=1)i=Math.min(h-1,slides.length-1);
+  render();setTimeout(function(){hint.classList.add('hide');},6000);
 })();
 </script>
 </body>
