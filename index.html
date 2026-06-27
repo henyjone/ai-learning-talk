@@ -126,12 +126,31 @@
   #hint.hide{opacity:0}
   .navbtn{position:fixed;top:50%;transform:translateY(-50%);z-index:45;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--ink);width:44px;height:44px;border-radius:50%;cursor:pointer;font-size:20px;opacity:.35;transition:opacity .2s}
   .navbtn:hover{opacity:1}#prev{left:16px}#next{right:16px}
+  .illus{display:block;margin:22px auto 0;width:100%;max-width:520px;max-height:34vh}
+  .hero-illus{display:block;margin:24px auto 0;width:100%;max-width:430px;max-height:30vh}
+  /* iPad / 平板 */
+  @media(min-width:761px) and (max-width:1180px){
+    .slide{padding:clamp(40px,5vw,76px) clamp(38px,5vw,68px)}
+    h1{font-size:clamp(36px,5.6vw,60px)}.axis{font-size:clamp(34px,5.2vw,56px)}
+    .two{gap:18px}table.ct{font-size:clamp(15px,2vw,20px)}
+    .illus{max-height:30vh}.hero-illus{max-height:26vh}
+  }
+  /* 手机竖屏 */
   @media(max-width:760px){
-    .slide{justify-content:flex-start;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:56px 18px 74px}
+    .slide{justify-content:flex-start;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:54px 18px 78px}
     .two,.q4,.clones{grid-template-columns:1fr}.weekgrid{grid-template-columns:1fr 1fr}
     .flow{flex-direction:column}.arrow{transform:rotate(90deg)}.navbtn{display:none}
     table.ct th,table.ct td{padding:10px 12px}
-    h1{font-size:33px}.axis{font-size:31px}.big{font-size:25px}h2{font-size:25px}
+    h1{font-size:32px}.axis{font-size:30px}.big{font-size:24px}h2{font-size:24px}
+    .kicker{margin-bottom:12px}.lead{margin-top:16px}.mt2{margin-top:24px}
+    ul.points li{font-size:19px;padding-left:32px}
+    .illus{max-height:24vh;margin-top:14px}.hero-illus{max-height:20vh}
+    .phone{max-width:330px}.partnum{font-size:96px}
+  }
+  /* 手机横屏（矮屏） */
+  @media(max-height:480px) and (orientation:landscape){
+    .slide{justify-content:flex-start;overflow-y:auto;padding-top:46px;padding-bottom:56px}
+    .illus,.hero-illus{max-height:44vh}
   }
 </style>
 </head>
@@ -168,6 +187,25 @@
       <p class="lead">当答案唾手可得，到底该让孩子学会什么？</p>
       <p class="small mt" style="color:var(--gold-soft);font-size:clamp(13px,1.6vw,18px)">一套可复制的方法：<b>知识库（第二大脑）＋ AI（陪练）</b></p>
       <p class="big mt2" style="font-size:clamp(19px,2.5vw,28px);color:var(--ink)"><svg class="ico" style="color:var(--gold)"><use href="#i-spark"/></svg> 你家孩子卡住时，是<span class="accent">先自己想</span>，还是<span class="accent">先问 AI</span>？</p>
+      <svg class="hero-illus" viewBox="0 0 300 200" aria-hidden="true">
+        <circle cx="150" cy="100" r="86" fill="none" stroke="rgba(232,176,75,.13)"/>
+        <g stroke="rgba(232,176,75,.32)" stroke-width="1.5">
+          <line x1="150" y1="100" x2="92" y2="58"/><line x1="150" y1="100" x2="212" y2="56"/>
+          <line x1="150" y1="100" x2="96" y2="150"/><line x1="150" y1="100" x2="210" y2="146"/>
+          <line x1="150" y1="100" x2="150" y2="44"/>
+          <line x1="92" y1="58" x2="150" y2="44"/><line x1="212" y1="56" x2="150" y2="44"/>
+          <line x1="92" y1="58" x2="56" y2="104"/><line x1="212" y1="56" x2="244" y2="104"/>
+          <line x1="96" y1="150" x2="132" y2="182"/><line x1="210" y1="146" x2="178" y2="182"/>
+        </g>
+        <g>
+          <circle cx="150" cy="100" r="13" fill="var(--gold)"/>
+          <circle cx="92" cy="58" r="8" fill="var(--teal)"/><circle cx="212" cy="56" r="8" fill="var(--teal)"/>
+          <circle cx="96" cy="150" r="7" fill="var(--teal)"/><circle cx="210" cy="146" r="7" fill="var(--teal)"/>
+          <circle cx="150" cy="44" r="6" fill="rgba(255,255,255,.65)"/>
+          <circle cx="56" cy="104" r="5" fill="rgba(255,255,255,.5)"/><circle cx="244" cy="104" r="5" fill="rgba(255,255,255,.5)"/>
+          <circle cx="132" cy="182" r="4" fill="rgba(255,255,255,.4)"/><circle cx="178" cy="182" r="4" fill="rgba(255,255,255,.4)"/>
+        </g>
+      </svg>
     </div>
   </section>
 
@@ -189,6 +227,22 @@
       <h2 class="frag">作业写得又快又对，本子干干净净——<br>你以为他在学。</h2>
       <p class="big frag mt2">换个说法、过两天再问，<span class="red">他就坐那儿，空着。</span></p>
       <p class="lead frag">他可能根本没在学，他在<span class="accent">「外包大脑」</span>。<b>本子越漂亮，越危险。</b></p>
+      <svg class="illus frag" viewBox="0 0 300 188" aria-hidden="true">
+        <rect x="38" y="66" width="150" height="106" rx="8" fill="rgba(255,255,255,.03)" stroke="var(--line)"/>
+        <g stroke="var(--teal)" stroke-width="2.4" stroke-linecap="round" fill="none">
+          <path d="M52 90 l6 6 10-12"/><path d="M52 116 l6 6 10-12"/><path d="M52 142 l6 6 10-12"/>
+        </g>
+        <g stroke="rgba(255,255,255,.22)" stroke-width="3" stroke-linecap="round">
+          <line x1="78" y1="96" x2="172" y2="96"/><line x1="78" y1="122" x2="172" y2="122"/><line x1="78" y1="148" x2="158" y2="148"/>
+        </g>
+        <g fill="none" stroke="rgba(255,122,122,.6)" stroke-width="2" stroke-dasharray="4 5">
+          <circle cx="224" cy="44" r="20"/><circle cx="256" cy="52" r="14"/><circle cx="236" cy="68" r="16"/>
+        </g>
+        <text x="232" y="60" fill="rgba(255,122,122,.85)" font-size="26" text-anchor="middle" font-weight="700">?</text>
+        <circle cx="206" cy="92" r="4" fill="none" stroke="rgba(255,122,122,.5)" stroke-width="1.6"/>
+        <circle cx="196" cy="108" r="2.6" fill="none" stroke="rgba(255,122,122,.45)" stroke-width="1.6"/>
+        <text x="113" y="186" fill="var(--dim)" font-size="12" text-anchor="middle">本子满满，脑子空空</text>
+      </svg>
     </div>
   </section>
 
@@ -238,6 +292,18 @@
       <h2 class="frag">不是答案。是那一次<br><span class="accent">「卡住、硬想、突然通了」</span>的挣扎。</h2>
       <p class="lead frag">思考这块肌肉，只在这个「摩擦」里长。AI 最危险的地方，是它<span class="accent">太顺滑</span>，把摩擦消灭得干干净净。</p>
       <p class="big frag mt">没有摩擦，就没有生长。</p>
+      <svg class="illus frag" viewBox="0 0 320 150" aria-hidden="true">
+        <defs><marker id="ah" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6" fill="none" stroke="var(--red)" stroke-width="1.6"/></marker></defs>
+        <rect x="12" y="50" width="48" height="34" rx="8" fill="none" stroke="var(--line)"/>
+        <line x1="22" y1="62" x2="50" y2="62" stroke="var(--muted)" stroke-width="2"/><line x1="22" y1="72" x2="44" y2="72" stroke="var(--muted)" stroke-width="2"/>
+        <line x1="66" y1="67" x2="92" y2="67" stroke="var(--red)" stroke-width="2.4" marker-end="url(#ah)"/>
+        <circle cx="120" cy="67" r="24" fill="none" stroke="rgba(255,122,122,.7)" stroke-width="2.4"/>
+        <circle cx="120" cy="67" r="4" fill="rgba(255,255,255,.22)"/>
+        <text x="120" y="116" fill="var(--red)" font-size="13" text-anchor="middle">喂答案 · 脑子关机</text>
+        <circle cx="240" cy="67" r="24" fill="none" stroke="var(--teal)" stroke-width="2.4"/>
+        <g stroke="var(--gold)" stroke-width="2.2" stroke-linecap="round"><line x1="240" y1="54" x2="240" y2="80"/><line x1="227" y1="67" x2="253" y2="67"/><line x1="231" y1="58" x2="249" y2="76"/><line x1="249" y1="58" x2="231" y2="76"/></g>
+        <text x="240" y="116" fill="var(--teal)" font-size="13" text-anchor="middle">自己想 · 脑子开机</text>
+      </svg>
     </div>
   </section>
 
